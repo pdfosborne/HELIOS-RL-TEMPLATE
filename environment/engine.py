@@ -9,7 +9,26 @@ class Engine:
     def __init__(self) -> None:
         """Initialize Engine"""
         self.Environment = "Engine Initialization"
+    
+    def ledger(self) -> None:
+        """Ledger of the environment with meta information for the problem"""
+        self.required = {
+            'id': 'Unique Problem ID',
+            'description': 'Problem Description',
+            'goal': 'Goal Description',
+            }
         
+        self.optional = {
+            'name': 'Problem Name',
+            'reward': 'Reward Description',
+            'punishment': 'Punishment Description (if any)',
+            'state': 'State Description',
+            'constraints': 'Constraints Description',
+            'action': 'Action Description',
+            'author': 'Author',
+            'year': 'Year'
+        }
+
     def reset(self):
         """Fully reset the environment."""
         obs, _ = self.Environment.reset()
@@ -29,4 +48,9 @@ class Engine:
         """Define legal moves at each position"""
         legal_moves = self.Environment.legal_moves(obs)
         return legal_moves
+    
+    def render(self, state:any):
+        """Render the environment."""
+        render = self.Environment.render(state)
+        return render
 
