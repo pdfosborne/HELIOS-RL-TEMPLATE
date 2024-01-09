@@ -3,8 +3,6 @@ import pandas as pd
 # ====== HELIOS IMPORTS =========================================
 # ------ Train/Test Function Imports ----------------------------
 from helios_rl import STANDARD_RL
-# ------ Environment Interaction Loop ---------------------------
-from helios_rl.interaction_loops.standard import StandardInteractionLoop
 # ------ Config Import ------------------------------------------
 # Meta parameters
 from helios_rl.config import TestingSetupConfig
@@ -28,17 +26,14 @@ def main():
     ExperimentConfig = TestingSetupConfig("./config.json").state_configs
     # Local Parameters
     ProblemConfig = ConfigSetup("./config_local.json").state_configs
-
-    Environment = StandardInteractionLoop(Engine, ADAPTERS, ProblemConfig)
-
     # Specify save dir
     time = datetime.now().strftime("%d-%m-%Y_%H-%M")
     save_dir = './output/'+str('test')+'_'+time 
-
     # --------------------------------------------------------------------
     # Flat Baselines
-    flat = STANDARD_RL(Config=ExperimentConfig, Environment=Environment,
-                save_dir=save_dir, show_figures = 'No', window_size=0.1)
+    flat = STANDARD_RL(Config=ExperimentConfig, ProblemConfig = ProblemConfig,
+                        Engine=Engine,
+                        save_dir=save_dir, show_figures = 'Yes', window_size=0.1)
     flat.train()  
     flat.test()
     # --------------------------------------------------------------------
